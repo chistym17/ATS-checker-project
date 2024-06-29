@@ -1,0 +1,6 @@
+Flask
+python-dotenv
+Pillow
+pdf2image
+google==3.0.0
+flask-cors
