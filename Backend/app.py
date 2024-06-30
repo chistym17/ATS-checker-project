@@ -48,19 +48,19 @@ def evaluate_resume():
     pdf_content = input_pdf_setup(uploaded_file)
     
     if prompt_type == "evaluation":
-         prompt = """
-         You are an experienced Technical Human Resource Manager. Your task is to review the provided resume against the job description. 
-         Please provide a detailed professional evaluation on whether the candidate's profile aligns with the role. 
-         Your evaluation should cover the following points:
+        prompt = """
+        You are an experienced Technical Human Resource Manager. Your task is to review the provided resume against the job description. 
+        Please provide a detailed professional evaluation on whether the candidate's profile aligns with the role. 
+        Your evaluation should cover the following points:
 
-         1. **Overall Fit**: Does the candidate's experience and skills match the job requirements?
-         2. **Strengths**: Highlight the key strengths and qualifications of the candidate in relation to the job.
-         3. **Weaknesses**: Identify any gaps or areas where the candidate's profile does not meet the job requirements.
-         4. **Missing Keywords**: List any important keywords or skills from the job description that are missing from the resume.
-         5. **Recommendations**: Provide any recommendations for the candidate to improve their profile for this role.
+        1. **Overall Fit**: Does the candidate's experience and skills match the job requirements?
+        2. **Strengths**: Highlight the key strengths and qualifications of the candidate in relation to the job.
+        3. **Weaknesses**: Identify any gaps or areas where the candidate's profile does not meet the job requirements.
+        4. **Missing Keywords**: List any important keywords or skills from the job description that are missing from the resume.
+        5. **Recommendations**: Provide any recommendations for the candidate to improve their profile for this role.
 
-         Please ensure your evaluation is thorough and professional.
-         """
+        Please ensure your evaluation is thorough and professional.
+        """
 
     elif prompt_type == "percentage_match":
         prompt = """
@@ -73,6 +73,21 @@ def evaluate_resume():
 
     response = get_gemini_response(input_text, pdf_content, prompt)
     return jsonify({"response": response})
+
+@app.route('/test', methods=['POST'])
+def test_json_post():
+    data = request.json  # Assuming the request body is JSON
+    # Example JSON structure: {"message": "Hello, Flask!"}
+    if 'message' not in data:
+        return jsonify({"error": "Message field not found"}), 400
+    
+    message = data['message']
+    return jsonify({"received_message": message})
+
+@app.route('/', methods=['GET'])
+def test_endpoint():
+    return jsonify({"message": "Test endpoint is working!"})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
